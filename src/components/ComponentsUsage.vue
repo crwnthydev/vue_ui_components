@@ -5,7 +5,7 @@
 				<span class="demo__tip">Input</span>
 				<my-input type="text" placeholder="Text-input" v-model="inputModel"></my-input>
 			</div>
-			<div class="demo__result">
+			<div class="demo__result" v-if="inputModel.length > 0">
 				<span class="demo__tip">Input result:</span>
 				<p>{{inputModel}}</p>
 			</div>
@@ -16,9 +16,20 @@
 				<span class="demo__tip">Select</span>
 				<my-select v-model="selectModel" :options="selectOptions" :titleOption="selectTitle"/>
 			</div>
-			<div class="demo__result">
+			<div class="demo__result" v-if="selectModel.length > 0">
 				<span class="demo__tip">Select result:</span>
 				<p>{{selectModel}}</p>
+			</div>
+		</div>
+
+		<div class="demos__button demo">
+			<div class="demo__active-element">
+				<span class="demo__tip">Button</span>
+				<my-button @click="counterIncrement">Click</my-button>
+			</div>
+			<div class="demo__result" v-if="counterModel > 0">
+				<span class="demo__tip">Button click result:</span>
+				<p>{{counterModel}}</p>
 			</div>
 		</div>
 		
@@ -39,8 +50,14 @@ export default {
 				{value: 'Demo option 4', name: 'Demo option 4'},
 			],
 			selectTitle: "Choose from list",
+			counterModel: 0,
 		}	
-	}
+	},
+	methods: {
+		counterIncrement(){
+			this.counterModel += 1;
+		}
+	},
 }
 </script>
 
@@ -61,9 +78,18 @@ export default {
 		line-height: 1.3em;
 		color: #000000;
 
+		@media (max-width: 1024px) {
+			flex-direction: column;
+		}
+
 		input,
-		select {
+		select,
+		button {
 			min-width: 150px;
+		}
+
+		button {
+			cursor: pointer;
 		}
 	}
 
@@ -83,10 +109,10 @@ export default {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			margin: 0 0 20px 0;
 		}
 
 		&__result {
+			margin: 15px 0 0 0;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
