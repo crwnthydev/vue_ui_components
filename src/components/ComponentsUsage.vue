@@ -2,8 +2,8 @@
 	<div class="demos">
 		<div class="demos__input demo">
 			<div class="demo__active-element">
-				<span class="demo__tip">Input</span>
-				<my-input type="text" placeholder="Text-input" v-model="inputModel"></my-input>
+				<span class="demo__tip demo__tip--heading">Input</span>
+				<my-input type="text" placeholder="Text" v-model="inputModel"></my-input>
 			</div>
 			<div class="demo__result" v-if="inputModel.length > 0">
 				<span class="demo__tip">Input result:</span>
@@ -13,7 +13,7 @@
 
 		<div class="demos__select demo">
 			<div class="demo__active-element">
-				<span class="demo__tip">Select</span>
+				<span class="demo__tip demo__tip--heading">Select</span>
 				<my-select v-model="selectModel" :options="selectOptions" :titleOption="selectTitle"/>
 			</div>
 			<div class="demo__result" v-if="selectModel.length > 0">
@@ -24,7 +24,7 @@
 
 		<div class="demos__button demo">
 			<div class="demo__active-element">
-				<span class="demo__tip">Button</span>
+				<span class="demo__tip demo__tip--heading">Button</span>
 				<my-button @click="counterIncrement">Click</my-button>
 			</div>
 			<div class="demo__result" v-if="counterModel > 0">
@@ -32,6 +32,23 @@
 				<p>{{counterModel}}</p>
 			</div>
 		</div>
+
+		<div class="demos__dialog demo">
+			<div class="demo__active-element">
+				<span class="demo__tip demo__tip--heading">Dialog</span>
+				<my-button @click="showDialog">Show dialog</my-button>
+			</div>
+			<div class="demo__result">
+				<my-dialog v-model:show="dialogVisible">
+					<p>Dialog opened</p>
+					<my-input placeholder="Test"></my-input>
+					<my-input placeholder="Test"></my-input>
+					<my-button @click="hideDialog">Close</my-button>
+				</my-dialog>
+			</div>
+		</div>
+
+
 		
 	</div>
 </template>
@@ -51,12 +68,19 @@ export default {
 			],
 			selectTitle: "Choose from list",
 			counterModel: 0,
+			dialogVisible: false,
 		}	
 	},
 	methods: {
 		counterIncrement(){
 			this.counterModel += 1;
-		}
+		},
+		showDialog(){
+			this.dialogVisible = true;
+		},
+		hideDialog(){
+			this.dialogVisible = false;
+		},
 	},
 }
 </script>
@@ -77,6 +101,13 @@ export default {
 		font-size: 16px;
 		line-height: 1.3em;
 		color: #000000;
+
+		&__dialog {
+			p,
+			input {
+				margin: 0 0 15px 0;
+			}
+		}
 
 		@media (max-width: 1024px) {
 			flex-direction: column;
@@ -103,6 +134,10 @@ export default {
 			background-color: rgba(47, 187, 112, 0.7);
 			margin: 0 0 7px 0;
 			min-width: 150px;
+
+			&--heading {
+				font-weight: 600;
+			}
 		}
 
 		&__active-element {
@@ -117,7 +152,7 @@ export default {
 			flex-direction: column;
 			align-items: center;
 			min-width: 150px;
-			border-bottom: 1px solid black;
+			border-bottom: 1px solid #000000;
 		}
 	}
 
